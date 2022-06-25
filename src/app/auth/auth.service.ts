@@ -81,7 +81,8 @@ export class AuthService {
     const tokenExpirationDate = new Date(expiresIn * 1000);
     const user = new User(email, token, tokenExpirationDate);
     this.user.next(user);
-    this.autoLogout(expiresIn * 1000);
+    const expirationDuration = new Date(tokenExpirationDate).getTime() - new Date().getTime();
+    this.autoLogout(expirationDuration);
     localStorage.setItem('userData', JSON.stringify(user));
   }
 
